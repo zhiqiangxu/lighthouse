@@ -252,7 +252,10 @@ pub fn get_config<E: EthSpec>(
         client_config.eth1.cache_follow_distance = Some(follow_distance);
     }
 
-    if let Some(endpoints) = cli_args.value_of("execution-endpoint") {
+    let endpoints = cli_args
+        .value_of("execution-endpoint")
+        .expect("safe since execution-endpoint is now mandatory");
+    {
         let mut el_config = execution_layer::Config::default();
 
         // Always follow the deposit contract when there is an execution endpoint.
